@@ -1,0 +1,42 @@
+<!-- public/tilda-test.html -->
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Тест формата Тильды</h2>
+  
+  <form action="/api/tilda/webhook" method="POST" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="formid" value="test-form" readonly>
+    <input type="text" name="projectid" value="12345" readonly>
+    <input type="text" name="formname" value="Contact Form" readonly>
+    
+    <input type="text" name="name" placeholder="Имя" required>
+    <input type="tel" name="phone" placeholder="Телефон" required>
+    <input type="email" name="email" placeholder="Email" required>
+    
+    <button type="submit">Отправить (как Тильда)</button>
+  </form>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = new URLSearchParams(formData).toString();
+      
+      try {
+        const response = await fetch('/api/tilda/webhook', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: data
+        });
+        
+        const text = await response.text();
+        alert(`Ответ: ${text}\nСтатус: ${response.status}`);
+      } catch (error) {
+        alert('Ошибка: ' + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
