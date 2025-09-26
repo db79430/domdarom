@@ -13,6 +13,13 @@ class TildaController {
       ip: req.ip,
       timestamp: new Date().toISOString()
     });
+
+    if (req.body) {
+      console.log('🏷️ Form ID:', req.body.formid);
+      console.log('📞 Phone:', req.body.phone);
+      console.log('👤 Name:', req.body.name);
+      console.log('📧 Email:', req.body.email);
+    }
     
     try {
       const tildaData = req.body;
