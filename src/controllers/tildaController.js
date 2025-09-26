@@ -4,11 +4,15 @@ import UserService from '../services/userServices.js';
 class TildaController {
   static async handleWebhook(req, res) {
     console.log('=== TILDA WEBHOOK RECEIVED ===');
+    console.log('🎯 === TILDA WEBHOOK RECEIVED ===');
+    console.log('⏰ Time:', new Date().toISOString());
+    console.log('📦 Full request body:', JSON.stringify(req.body, null, 2));
     
     try {
       const tildaData = req.body;
       console.log('📦 Raw data type:', typeof tildaData);
       console.log('📦 Raw data keys:', Object.keys(tildaData));
+      
       
       // Сразу отвечаем Tilda
       res.setHeader('Access-Control-Allow-Origin', '*');
