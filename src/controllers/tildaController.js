@@ -7,6 +7,12 @@ class TildaController {
     console.log('🎯 === TILDA WEBHOOK RECEIVED ===');
     console.log('⏰ Time:', new Date().toISOString());
     console.log('📦 Full request body:', JSON.stringify(req.body, null, 2));
+    console.log('📨 Tilda Webhook Received:', {
+      headers: req.headers,
+      body: req.body,
+      ip: req.ip,
+      timestamp: new Date().toISOString()
+    });
     
     try {
       const tildaData = req.body;
