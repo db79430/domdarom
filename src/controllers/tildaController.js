@@ -8,7 +8,7 @@ class TildaController {
     console.log('⏰ Time:', new Date().toISOString());
     console.log('📦 Full request body:', JSON.stringify(req.body, null, 2));
     console.log('📨 Tilda Webhook Received:', {
-      headers: req.headers,
+      headers: JSON.stringify(req.headers, null, 2),
       body: req.body,
       ip: req.ip,
       timestamp: new Date().toISOString()

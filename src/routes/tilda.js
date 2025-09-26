@@ -319,12 +319,6 @@ const router = express.Router();
 
 // Основной webhook endpoint
 router.post('/webhook', TildaController.handleWebhook);
-console.log('📨 Tilda Webhook Received:', {
-  headers: req.headers,
-  body: req.body,
-  ip: req.ip,
-  timestamp: new Date().toISOString()
-});
 
 // Тестовый endpoint для проверки
 router.get('/webhook', (req, res) => {
