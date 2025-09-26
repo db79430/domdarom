@@ -26,6 +26,7 @@
     "googleapis": "^160.0.0",
     "http-proxy": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
+    "node-pg-migrate": "^8.0.3",
     "nodemailer": "^6.10.1",
     "pg": "^8.16.3",
     "uuid": "^13.0.0"
