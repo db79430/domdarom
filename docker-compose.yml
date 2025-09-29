@@ -20,7 +20,7 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     environment:
       - YANDEX_EMAIL=${YANDEX_EMAIL}
       - YANDEX_APP_PASSWORD=${YANDEX_APP_PASSWORD}
@@ -30,29 +30,33 @@ services:
       - DB_USER=${DB_USER:-postgres}
       - DB_PASSWORD=${DB_PASSWORD:-secure_password}
       - DB_NAME=${DB_NAME:-myapp}
+      - NODE_ENV=production
+      - VIRTUAL_HOST=api.domdarom.me
     volumes:
       - .:/app
       - /app/node_modules
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./ssl:/etc/nginx/ssl
     depends_on:
       - postgres
     restart: unless-stopped
     networks:
       - app-network
 
-  # nginx:
-  #   image: nginx:alpine
-  #   ports:
-  #     - "8080:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./nginx.conf:/etc/nginx/nginx.conf
-  #     - ./static:/app/static
-  #     - ./ssl:/etc/nginx/ssl
-  #   depends_on:
-  #     - app
-  #   restart: unless-stopped
-  #   networks:
-  #     - app-network
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./static:/app/static
+      - ./ssl:/etc/nginx/ssl
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - app-network
 
 volumes:
   postgres_data:
