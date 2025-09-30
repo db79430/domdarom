@@ -30,8 +30,7 @@ class User {
         userData.conditions, 
         userData.checkbox,
         userData.documents, 
-        userData.payment_status, 
-        userData.slot_number, 
+        userData.payment_status,
         userData.purchased_numbers,  
         userData.membership_status, 
         userData.tilda_transaction_id,
@@ -167,6 +166,28 @@ class User {
     const result = await pool.query(query);
     return result.rows;
   }
+
+  static async getUserSlots(userId) {
+    const query = `
+      SELECT s.* 
+      FROM slots s 
+      WHERE s.user_id = $1 AND s.status = 'active'
+      ORDER BY s.purchase_date DESC
+    `;
+    const result = await db.query(query, [userId]);
+    return result.rows;
+  }
+
+  static async getUserSlotsCount(userId) {
+    const query = `
+      SELECT COUNT(*) as slot_count 
+      FROM slots 
+      WHERE user_id = $1 AND status = 'active'
+    `;
+    const result = await db.query(query, [userId]);
+    return parseInt(result.rows[0].slot_count);
+  }ы
+
 }
 
 export default User;

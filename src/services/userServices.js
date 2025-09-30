@@ -186,7 +186,7 @@ return user;
       // Immediately process payment (stub)
       const paymentResult = await PaymentService.processPayment({
         user_id: newUser.user_id,
-        amount: 1000,
+        amount: 1,
         description: "Регистрационный взнос в клуб"
       });
 
