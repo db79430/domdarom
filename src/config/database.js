@@ -7,6 +7,7 @@ const poolConfig = {
   port: process.env.DB_PORT,
   database: process.env.DB_NAME,
   user: process.env.DB_USER,
+  password: null,
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,
