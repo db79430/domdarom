@@ -28,11 +28,11 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
     environment:
-      - DB_HOST=db 
+      - DB_HOST=localhost
       - DB_PORT=5432
-      - DB_NAME=club_db
-      - DB_USER=myuser
-      - DB_PASSWORD=securepassword12
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
       - PORT=3000
       - NODE_ENV=production
       - YANDEX_EMAIL=${YANDEX_EMAIL}
@@ -41,6 +41,8 @@ services:
       - YOOKASSA_SHOP_ID=510835
       - YOOKASSA_SECRET_KEY=test_*gSZ1sNXvXEHTBi3DffHTncFsJwS-afkEp1Sdiri9jE3g
       - FRONTEND_URL=https://domdarom.me
+    extra_hosts:
+      - "host.docker.internal:host-gateway
     volumes:
       - .:/app
       - /app/node_modules
