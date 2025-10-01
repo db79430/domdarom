@@ -9,7 +9,7 @@ const app = express();
 
 // CORS настройка
 app.use(cors({
-  origin: ['https://domdarom.me', 'https://www.domdarom.me','http://api.domdarom.me'],
+  origin: ['https://domdarom.me', 'https://www.domdarom.me','http://api.domdarom.me', 'http://localhost:3000'],
   credentials: true
 }));
 
@@ -76,6 +76,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📍 Local: http://localhost:${PORT}`);
-  console.log(`🌐 Tilda Webhook: https://api.domdarom.me/api/tilda/webhook`);
   console.log(`❤️ Health: http://localhost:${PORT}/health`);
 });

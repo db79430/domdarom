@@ -20,13 +20,13 @@ CREATE TABLE IF NOT EXISTS users (
     tilda_page_id VARCHAR(100),
     payment_id VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-);
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+); -- 🔥 УБРАЛИ лишнюю запятую
 
--- Создание таблицы слотов
+-- Создание таблицы слотов (ИСПРАВЛЕНО user_id)
 CREATE TABLE IF NOT EXISTS slots (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    user_id BIGINT REFERENCES users(user_id) ON DELETE CASCADE, -- 🔥 BIGINT вместо INTEGER
     slot_number INTEGER NOT NULL CHECK (slot_number >= 1 AND slot_number <= 20000),
     purchase_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     yookassa_payment_id VARCHAR(255),
@@ -34,10 +34,10 @@ CREATE TABLE IF NOT EXISTS slots (
     UNIQUE(slot_number)
 );
 
--- Создание таблицы платежей для отслеживания истории
+-- Создание таблицы платежей (ИСПРАВЛЕНО user_id)
 CREATE TABLE IF NOT EXISTS payments (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    user_id BIGINT REFERENCES users(user_id) ON DELETE CASCADE, -- 🔥 BIGINT вместо INTEGER
     slot_id INTEGER REFERENCES slots(id) ON DELETE SET NULL,
     amount DECIMAL(10,2) NOT NULL,
     payment_type VARCHAR(50) CHECK (payment_type IN ('entrance_fee', 'slot_purchase')),
@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS payments (
 
 -- Индексы для оптимизации
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+CREATE INDEX IF NOT EXISTS idx_users_phone ON users(phone);
 CREATE INDEX IF NOT EXISTS idx_slots_user_id ON slots(user_id);
 CREATE INDEX IF NOT EXISTS idx_slots_slot_number ON slots(slot_number);
 CREATE INDEX IF NOT EXISTS idx_payments_user_id ON payments(user_id);
@@ -67,3 +68,10 @@ CREATE TRIGGER update_users_updated_at
     BEFORE UPDATE ON users 
     FOR EACH ROW 
     EXECUTE FUNCTION update_updated_at_column();
+
+-- Тестовые данные для проверки
+INSERT INTO users (user_id, fullname, email, phone, login, password, payment_status, membership_status) 
+VALUES 
+(100000001, 'Тестовый Пользователь 1', 'test1@example.com', '+79990000001', 'testuser1', 'password123', 'pending', 'pending_payment'),
+(100000002, 'Тестовый Пользователь 2', 'test2@example.com', '+79990000002', 'testuser2', 'password123', 'completed', 'active')
+ON CONFLICT (user_id) DO NOTHING;
