@@ -5,18 +5,19 @@ services:
     build: .
     container_name: domdarom-app
     ports:
-      - "127.0.0.1:3000:3000"
+      - "3000:3000"  # 🔥 Пробрасываем порт
     environment:
-      - DB_HOST=localhost
+      - DB_HOST=host.docker.internal  # 🔥 Специальное имя для доступа к хосту
       - DB_PORT=5432
       - DB_NAME=club_db
       - DB_USER=darlabayandina
-      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PASSWORD=securepassword123
       - PORT=3000
       - NODE_ENV=production
-      - YANDEX_EMAIL=${YANDEX_EMAIL}
-      - YANDEX_APP_PASSWORD=${YANDEX_APP_PASSWORD}
-    network_mode: "host"
+      - YANDEX_EMAIL=d0mdarom@yandex.ru
+      - YANDEX_APP_PASSWORD=omsjbmtbawyxdpxm
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # 🔥 Для доступа к localhost хоста
     volumes:
       - .:/app
       - /app/node_modules
