@@ -10,8 +10,8 @@ services:
       - DB_HOST=host.docker.internal  # 🔥 Специальное имя для доступа к хосту
       - DB_PORT=5432
       - DB_NAME=club_db
-      - DB_USER=dariabayandina
-      - DB_PASSWORD=1234
+      - DB_USER=domdarom_user
+      - DB_PASSWORD=
       - PORT=3000
       - NODE_ENV=production
       - YANDEX_EMAIL=d0mdarom@yandex.ru
